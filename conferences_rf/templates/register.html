@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Регистрация — Конференции.РФ{% endblock %}
+{% block content %}
+<section class="auth-section"><div class="auth-aside"><span class="eyebrow">СОЗДАЙТЕ АККАУНТ</span><h1>Организуйте события с комфортом.</h1><p>Личный кабинет поможет отправлять заявки и следить за их статусом в одном месте.</p><div class="auth-aside__ornament">К.РФ</div></div>
+<div class="form-box"><span class="eyebrow">НОВЫЙ ПОЛЬЗОВАТЕЛЬ</span><h2>Регистрация</h2><p class="form-intro">Заполните поля, чтобы создать учётную запись.</p>
+<form method="post" action="{{ url_for('register') }}" data-validate="register" novalidate>
+{% for field, label, typ, placeholder in [('login','Логин','text','ivanov2027'),('password','Пароль','password','Не менее 6 символов'),('full_name','ФИО','text','Иванов Иван Иванович'),('phone','Телефон','tel','8(900)123-45-67'),('email','Электронная почта','email','name@example.ru')] %}
+<div class="form__group"><label for="{{ field }}">{{ label }}</label><input class="form-control {{ 'is-invalid' if errors.get(field) }}" id="{{ field }}" name="{{ field }}" type="{{ typ }}" value="{{ '' if field == 'password' else form.get(field, '') }}" placeholder="{{ placeholder }}" {% if field != 'password' %}data-field="{{ field }}"{% endif %} required><div class="form__error" data-error="{{ field }}">{{ errors.get(field, '') }}</div></div>
+{% endfor %}
+<button class="button button--full" type="submit">Создать пользователя <span>→</span></button>
+</form><p class="form-bottom">Уже зарегистрированы? <a href="{{ url_for('login') }}">Войти</a></p>
+</div></section>
+{% endblock %}

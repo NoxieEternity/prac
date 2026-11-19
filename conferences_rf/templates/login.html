@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Вход — Конференции.РФ{% endblock %}
+{% block content %}
+<section class="auth-section"><div class="auth-aside"><span class="eyebrow">РАДЫ ВАС ВИДЕТЬ</span><h1>Ваши события начинаются здесь.</h1><p>Войдите, чтобы управлять заявками и планировать новые конференции.</p><div class="auth-aside__ornament">К.РФ</div></div>
+<div class="form-box"><span class="eyebrow">ЛИЧНЫЙ КАБИНЕТ</span><h2>Вход в систему</h2><p class="form-intro">Введите данные своей учётной записи.</p>
+<form method="post" action="{{ url_for('login') }}">
+  <div class="form__group"><label for="login">Логин</label><input id="login" name="login" type="text" class="form-control" placeholder="Ваш логин" required autocomplete="username"></div>
+  <div class="form__group"><label for="password">Пароль</label><input id="password" name="password" type="password" class="form-control" placeholder="Ваш пароль" required autocomplete="current-password"></div>
+  <button class="button button--full" type="submit">Войти <span>→</span></button>
+</form><p class="form-bottom">Еще не зарегистрированы? <a href="{{ url_for('register') }}">Регистрация</a></p>
+</div></section>
+{% endblock %}

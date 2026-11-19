@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Новая заявка — Конференции.РФ{% endblock %}
+{% block content %}
+<section class="page-intro"><div class="container"><span class="eyebrow">БРОНИРОВАНИЕ</span><h1>Новая заявка</h1><p>Расскажите о планируемом мероприятии — мы передадим заявку на рассмотрение.</p></div></section>
+<section class="section"><div class="container narrow"><div class="form-box form-box--wide">
+<form method="post" action="{{ url_for('booking_new') }}">
+<div class="form__group"><label for="room_name">Помещение</label><input class="form-control {{ 'is-invalid' if errors.get('room') }}" id="room_name" name="room_name" list="room-options" value="{{ form.get('room_name','') }}" placeholder="Например: Кинозал «Премьер»" required><datalist id="room-options">{% for room in rooms %}<option value="{{ room.name }}">{% endfor %}</datalist><small class="form__hint">Доступные помещения: {{ rooms|length }}</small><div class="form__error">{{ errors.get('room','') }}</div></div>
+<div class="form__group"><label for="start_date">Дата начала конференции</label><input class="form-control {{ 'is-invalid' if errors.get('start_date') }}" id="start_date" name="start_date" value="{{ form.get('start_date','') }}" placeholder="ДД.ММ.ГГГГ" required><div class="form__error">{{ errors.get('start_date','') }}</div></div>
+<fieldset class="form__group"><legend>Способ оплаты</legend><label class="radio-card"><input type="radio" name="payment_method" value="При очном посещении" {% if form.get('payment_method') == 'При очном посещении' %}checked{% endif %} required><span><b>При очном посещении</b><small>Оплата на площадке</small></span></label><label class="radio-card"><input type="radio" name="payment_method" value="Перевод по СБП" {% if form.get('payment_method') == 'Перевод по СБП' %}checked{% endif %}><span><b>Перевод по СБП</b><small>Безналичная оплата</small></span></label><div class="form__error">{{ errors.get('payment_method','') }}</div></fieldset>
+<button class="button" type="submit">Отправить <span>→</span></button>
+</form></div></div></section>
+{% endblock %}

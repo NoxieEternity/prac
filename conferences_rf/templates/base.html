@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Портал бронирования помещений для всероссийских конференций">
+  <title>{% block title %}Конференции.РФ{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="page">
+<header class="header">
+  <div class="container header__inner">
+    <a class="header__logo" href="{{ url_for('index') }}"><span class="logo-mark">К</span><span>Конференции<span class="logo-accent">.РФ</span></span></a>
+    <nav class="nav" aria-label="Основная навигация">
+      <a class="nav__link" href="{{ url_for('index') }}">Главная</a>
+      {% if session.get('role') == 'admin' %}
+        <a class="nav__link" href="{{ url_for('admin') }}">Панель администратора</a>
+        <a class="nav__link" href="{{ url_for('logout') }}">Выйти</a>
+      {% elif session.get('user_id') %}
+        <a class="nav__link" href="{{ url_for('cabinet') }}">Мои заявки</a>
+        <a class="nav__link" href="{{ url_for('booking_new') }}">Новая заявка</a>
+        <a class="nav__link" href="{{ url_for('logout') }}">Выйти</a>
+      {% else %}
+        <a class="nav__link" href="{{ url_for('login') }}">Вход</a>
+        <a class="button button--small" href="{{ url_for('register') }}">Регистрация</a>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}<div class="container messages">{% for category, message in messages %}<div class="alert alert--{{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+{% endwith %}
+<main class="main">{% block content %}{% endblock %}</main>
+<footer class="footer">
+  <div class="container footer__inner">
+    <div><a class="footer__logo" href="{{ url_for('index') }}">Конференции.РФ</a><p>Пространство для важных встреч и больших идей.</p></div>
+    <div class="footer__contacts"><strong>Помогаем организовать событие</strong><span>info@conferences.example</span><span>© 2027 Конференции.РФ</span></div>
+  </div>
+</footer>
+<script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+</body>
+</html>
